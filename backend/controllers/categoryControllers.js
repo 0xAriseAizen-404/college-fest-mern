@@ -93,8 +93,10 @@ export const updateCategoryById = asyncHandler(async (req, res) => {
 export const deleteCategoryById = asyncHandler(async (req, res) => {
   const id = req.params.id;
   try {
-    await Category.deleteOne({ _id: id });
-    res.status(200).json({ message: "Category Deleted Successfully" });
+    const category = await Category.findByIdAndDelete(id);
+    res
+      .status(200)
+      .json({ message: "Category Deleted Successfully", Category: category });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ message: error.message || "Internal Server Error" });

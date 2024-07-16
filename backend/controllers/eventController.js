@@ -70,8 +70,10 @@ export const updateEventById = asyncHandler(async (req, res) => {
 export const deleteEventById = asyncHandler(async (req, res) => {
   const id = req.params.id;
   try {
-    await Event.deleteOne({ _id: id });
-    res.status(200).json({ message: "Event Deleted Successfully" });
+    const event = await Event.findByIdAndDelete(id);
+    res
+      .status(200)
+      .json({ message: "Event Deleted Successfully", Event: event });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ message: error.message || "Internal Server Error" });
