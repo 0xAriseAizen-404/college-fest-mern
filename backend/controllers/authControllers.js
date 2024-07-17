@@ -16,7 +16,9 @@ export const createAdmin = asyncHandler(async (req, res) => {
   try {
     await admin.save();
     admin.password = null;
-    res.status(201).json(admin);
+    res
+      .status(201)
+      .json({ message: "Admin created successfully", Admin: admin });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message || "Internal Server Error" });
@@ -35,7 +37,7 @@ export const loginAdmin = asyncHandler(async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     generateToken(res, admin._id);
     admin.password = null;
-    res.status(200).json({ message: "Login successfull" });
+    res.status(200).json({ message: "Login successfull", Admin: admin });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message || "Internal Server Error" });
@@ -54,7 +56,9 @@ export const getCurrAdmin = asyncHandler(async (req, res) => {
 });
 
 export const getAllAdmins = asyncHandler(async (req, res) => {
-  const admins = await Admin.find().select("-password");
+  const admins = await Admin.find({})
+    .sort({ updatedAt: -1 })
+    .select("-password");
   if (!admins) return res.status(404).json({ message: "No Admins found" });
   try {
     res.status(200).json(admins);
@@ -65,18 +69,23 @@ export const getAllAdmins = asyncHandler(async (req, res) => {
 });
 
 export const deleteAdminById = asyncHandler(async (req, res) => {
-  const admin = await Admin.findById(req.params.id);
-  if (!admin) return res.status(404).json({ message: "Admin not found" });
   try {
-    console.log(req.user._id + " " + admin._id);
-    if (admin._id.toString() === req.user._id.toString())
+    if (req.params.id.toString() === req.user._id.toString())
       return res.status(401).json({ message: "You can't delete yourself" });
-    await Admin.deleteOne({ _id: admin._id });
+    const admin = await Admin.findByIdAndDelete(req.params.id);
     res
       .status(200)
-      .json({ message: "Admin deleted successfully", id: req.user._id });
+      .json({ message: "Admin deleted successfully", adminId: admin._id });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message || "Internal Server Error" });
   }
+});
+
+export const logOutAdmin = asyncHandler(async (req, res) => {
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    expires: new Date(0),
+  });
+  res.status(200).json({ message: "Logged out successfully" });
 });

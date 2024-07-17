@@ -10,7 +10,7 @@
   }
 
   body {
-    @apply min-h-screen font-inter;
+    @apply bg-[#eee] min-h-screen font-inter;
   }
 }
 

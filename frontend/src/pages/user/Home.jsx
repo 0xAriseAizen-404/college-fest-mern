@@ -1,7 +1,7 @@
 export const Home = () => {
   return (
     <>
-      <section className="min-h-screen flex flex-col flex-center justify-center bg-hero-pattern">
+      <section className="mt-[4rem] min-h-screen flex flex-col flex-center justify-center bg-hero-pattern">
         <h1 className="text-5xl font-bold text-primary-500">
           Welcome to the College Fest!
         </h1>

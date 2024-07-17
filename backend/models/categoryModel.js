@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const categorySchema = mongoose.Schema(
+const categorySchema = new mongoose.Schema(
   {
     event: {
       type: mongoose.Schema.Types.ObjectId,
@@ -9,38 +9,21 @@ const categorySchema = mongoose.Schema(
     },
     title: { type: String, required: true },
     description: { type: String, required: true, default: "" },
-    
-    date: { type: Date, default: Date.now, required: true },image: {
+    date: { type: Date, required: true },
+    image: {
       type: String,
       required: true,
       default: "https://via.placeholder.com/400x400",
     },
-    minimum: { type: Number, default: 1, required: true },
-    maximum: { type: Number, default: 1, required: true },
+    minimum: { type: Number, required: true, default: 1 },
+    maximum: { type: Number, required: true, default: 10 },
     prices: {
-      price1: {
-        type: Number,
-        default: 0,
-      },
-      price2: {
-        type: Number,
-        default: 0,
-      },
-      price3: {
-        type: Number,
-        default: 0,
-      },
+      price1: { type: Number, default: 0 },
+      price2: { type: Number, default: 0 },
+      price3: { type: Number, default: 0 },
     },
-    isTechnical: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
-    duration: {
-      type: Number,
-      required: true,
-      default: 1,
-    },
+    isTechnical: { type: Boolean, required: true, default: false },
+    duration: { type: Number, required: true, default: 1 },
   },
   {
     timestamps: true,

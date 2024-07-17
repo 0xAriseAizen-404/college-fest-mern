@@ -13,6 +13,8 @@ const nonTechnicalCategorySchema = mongoose.Schema(
       name: { type: String, required: true },
       branch: { type: String },
       rollNo: { type: String },
+      email: { type: String, required: true },
+      phoneNumber: { type: String, required: true },
     },
     college: { type: String, required: true },
     coParticipants: [
@@ -24,7 +26,7 @@ const nonTechnicalCategorySchema = mongoose.Schema(
     ],
     participantPhoneNumber: { type: String, required: true },
     participantEmail: { type: String, required: true },
-    audio: { type: String },
+    audio: { type: String }, // URL from Cloudinary
     danceType: { type: String },
   },
   {

@@ -1,23 +1,35 @@
 import { asyncHandler } from "../middlewares/asyncHandler.js";
 import Event from "../models/eventModel.js";
+import { getDefaultImage } from "../utils/defaultImages.js";
+import { v2 as cloudinary } from "cloudinary";
 
 export const createEvent = asyncHandler(async (req, res) => {
-  const { title, description, date, noOfDays } = req.body;
+  const { title, description, date, noOfDays, image } = req.body;
   try {
-    const event = await Event({
+    const event = await Event.findOne({ title });
+    if (event)
+      return res.status(401).json({ message: "Event already created" });
+    let imageUrl;
+    if (!image) imageUrl = getDefaultImage();
+    else {
+      const uploadResponse = await cloudinary.uploader.upload(image, {
+        asset_folder: "college-fest",
+        resource_type: "image",
+      });
+      imageUrl = uploadResponse.secure_url;
+    }
+    const createdEvent = await Event({
       title,
       description,
       date,
       noOfDays,
+      image: imageUrl,
     });
 
-    // image for event
-    // cloudinary function
-
-    await event.save();
+    await createdEvent.save();
     res
       .status(200)
-      .json({ message: "Event Created Successfully", event: event });
+      .json({ message: "Event Created Successfully", event: createdEvent });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ message: error.message || "Internal Server Error" });
@@ -70,12 +82,19 @@ export const updateEventById = asyncHandler(async (req, res) => {
 export const deleteEventById = asyncHandler(async (req, res) => {
   const id = req.params.id;
   try {
-    const event = await Event.findByIdAndDelete(id);
+    const event = await Event.findById(id);
+    if (!event) return res.status(404).json({ message: "Event not found" });
+    console.log(event.image);
+    if (event.image) {
+      const imgId = event.image.split("/").pop().split(".")[0];
+      await cloudinary.uploader.destroy(imgId);
+    }
+    if (event) await Event.deleteOne({ _id: event._id });
     res
       .status(200)
       .json({ message: "Event Deleted Successfully", Event: event });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ message: error.message || "Internal Server Error" });
+    res.status(500).json({ message: error.message || "Post not Found" });
   }
 });

@@ -25,7 +25,7 @@ export const Navbar = () => {
           Events
         </NavLink>
         <NavLink
-          to="/admin-login"
+          to="/admin/login"
           className={({ isActive }) =>
             isActive
               ? "text-primary-600 text-sm xs:text-lg"

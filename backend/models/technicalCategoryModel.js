@@ -7,23 +7,57 @@ const technicalCategorySchema = mongoose.Schema(
       ref: "Event",
       required: true,
     },
-    title: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
-    noOfMembers: { type: Number, required: true },
-    participant: {
-      name: { type: String, required: true },
-      branch: { type: String },
-      rollNo: { type: String },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
     },
-    college: { type: String, required: true },
+    noOfParticipants: {
+      type: Number,
+      required: true,
+    },
+    mainParticipant: {
+      name: {
+        type: String,
+        required: true,
+      },
+      branch: {
+        type: String,
+        required: true,
+      },
+      rollNo: {
+        type: String,
+        required: true,
+      },
+      email: {
+        type: String,
+        required: true,
+      },
+      phoneNumber: {
+        type: String,
+        required: true,
+      },
+    },
     coParticipants: [
       {
-        name: { type: String, required: true },
-        rollNo: { type: String },
-        branch: { type: String },
+        name: {
+          type: String,
+          required: true,
+        },
+        branch: {
+          type: String,
+          required: true,
+        },
+        rollNo: {
+          type: String,
+          required: true,
+        },
       },
     ],
-    participantPhoneNumber: { type: String, required: true },
-    participantEmail: { type: String, required: true },
+    college: {
+      type: String,
+      default: "RVR & JC Colle od Engineering",
+    },
   },
   {
     timestamps: true,

@@ -20,7 +20,7 @@ export default {
       colors: {
         "primary-500": "#de283b",
         "primary-600": "#ff6366",
-        "secondary-500": "#ffccc4",
+        "secondary-500": "#4070f9",
         "off-white": "#D0DFFF",
         "dark-1": "#000000",
         "dark-2": "#09090A",
@@ -29,7 +29,7 @@ export default {
         "light-1": "#FFFFFF",
         "light-2": "#EFEFEF",
         "light-3": "#ffccc4",
-        "light-4": "#5C5C7B",
+        "light-4": "#e3eaff",
       },
       screens: {
         xs: "480px",
