@@ -13,6 +13,10 @@ export default {
       },
     },
     extend: {
+      backgroundImage: {
+        "hero-pattern": "url('/assets/hero.png')",
+        "footer-texture": "url('/img/footer-texture.png')",
+      },
       colors: {
         "primary-500": "#de283b",
         "primary-600": "#ff6366",

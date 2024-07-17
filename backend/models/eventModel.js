@@ -5,8 +5,12 @@ const eventSchema = mongoose.Schema(
     title: { type: String, required: true },
     description: { type: String, required: true, default: "" },
     date: { type: Date, required: true },
+    image: {
+      type: String,
+      required: true,
+      default: "https://via.placeholder.com/400x400",
+    },
     noOfDays: { type: Number, required: true },
-    image: { type: String, default: "https://via.placeholder.com/400x600" },
     categories: [
       {
         type: mongoose.Schema.Types.ObjectId,
