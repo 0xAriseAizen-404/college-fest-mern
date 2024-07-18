@@ -38,6 +38,11 @@ export const Alladmins = () => {
     });
   };
 
+  // const handleSetAdmins = (updatedAdmins) => {
+  //   setAdminsList(updatedAdmins);
+  //   dispatch(setAdmins(updatedAdmins));
+  // };
+
   const handleChangeKey = (key) => {
     setSearchKey(key);
     if (key === "") {
@@ -117,9 +122,7 @@ export const Alladmins = () => {
             </div>
             <button
               className={`text-sm md:text-base text-white font-bold hover:bg-[#4070F9] px-4 rounded py-2 xs:py-4 flex flex-center gap-2 ${
-                openForm
-                  ? "shadow-none bg-[#4070F9]"
-                  : "shadow-xl bg-[#5f8aff]"
+                openForm ? "shadow-none bg-[#4070F9]" : "shadow-xl bg-[#5f8aff]"
               }`}
               onClick={() => setOpenForm((prev) => !prev)}
             >

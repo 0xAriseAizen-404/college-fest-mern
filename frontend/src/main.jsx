@@ -12,6 +12,7 @@ import { DashBoard } from "./pages/admin/DashBoard.jsx";
 import { Alladmins } from "./pages/admin/Alladmins.jsx";
 import { Events } from "./pages/admin/Events.jsx";
 import { Participants } from "./pages/admin/Participants.jsx";
+import { EventForm } from "./pages/admin/forms/EventForm.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
@@ -43,6 +44,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="all-admins" element={<Alladmins />} />
             <Route path="events" element={<Events />} />
             <Route path="participants" element={<Participants />} />
+            <Route path="events/eventForm/:eventId" element={<EventForm />} />
+            <Route path="events/eventForm" element={<EventForm />} />
           </Route>
         </Routes>
       </BrowserRouter>
