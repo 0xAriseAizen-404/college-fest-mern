@@ -23,7 +23,7 @@ export const AdminRow = ({ admin, index, setAdmins }) => {
   };
 
   return (
-    <div className="w-full flex justify-between px-2 md:px-6 items-center bg-[#f1f1f1] border border-slate-300 p-2 rounded-md shadow-lg">
+    <div className="w-full flex justify-between px-2 md:px-6 items-center bg-text-200 p-2 rounded-md shadow-lg">
       <div className="">{index + 1}</div>
       <div className="">{admin.username}</div>
       <div className=" w-3/6 text-ellipsis truncate">{admin.email}</div>

@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.route("/login").post(loginAdmin);
 router.route("/logout").post(logOutAdmin);
-router.route("/create").post(createAdmin);
+router.route("/create").post(authenticate, createAdmin);
 router.route("/").get(authenticate, getAllAdmins);
 router
   .route("/:id")

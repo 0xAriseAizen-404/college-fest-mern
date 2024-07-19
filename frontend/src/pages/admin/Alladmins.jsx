@@ -4,9 +4,8 @@ import {
   useCreateAdminMutation,
   useGetAllAdminsQuery,
 } from "../../redux/api/adminApiSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { setAdmins } from "../../redux/features/admin/adminSlice";
 import { AdminRow } from "./components/AdminRow";
 import { z } from "zod";
 import { toast } from "react-toastify";
@@ -14,26 +13,23 @@ import { toast } from "react-toastify";
 export const Alladmins = () => {
   const [openForm, setOpenForm] = useState(false);
   const [searchKey, setSearchKey] = useState("");
-  const { admins } = useSelector((state) => state.admin);
   const [originalAdminsList, setOriginalAdminsList] = useState([]);
+  const { data: admins, isLoading, refetch } = useGetAllAdminsQuery();
   const [adminsList, setAdminsList] = useState(admins);
-  const { data: users, refetch, isLoading, error } = useGetAllAdminsQuery();
 
-  const { currentAdmin } = useSelector((state) => state.admin);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (users) {
-      setOriginalAdminsList(users);
-      setAdminsList(users);
-      dispatch(setAdmins(users));
+    if (admins) {
+      setOriginalAdminsList(admins);
+      setAdminsList(admins);
     }
-  }, [users, dispatch]);
+  }, [admins, dispatch]);
 
   const handleSetAdmins = (updateFn) => {
     setAdminsList((prevAdmins) => {
       const updatedAdmins = updateFn(prevAdmins);
-      dispatch(setAdmins(updatedAdmins));
+      setOriginalAdminsList(updatedAdmins);
       return updatedAdmins;
     });
   };
@@ -84,19 +80,19 @@ export const Alladmins = () => {
     try {
       CreateSchema.parse(formData);
       const res = await createAdmin(formData).unwrap();
-      console.log(res);
-      setAdminsList((prev) => [res.Admin, ...prev]);
-      dispatch(setAdmins(adminsList));
+      setAdminsList((prev) => [res.admin, ...prev]);
+      setOriginalAdminsList((prev) => [res.admin, ...prev]);
       setErrMessage("");
       toast.success(res.message);
       setFormData({ username: "", email: "", password: "" });
       setOpenForm((prev) => !prev);
+      // refetch()
     } catch (err) {
       if (err instanceof z.ZodError) {
         setErrMessage(err.errors[0].message);
       } else {
-        if (err?.data?.message) {
-          toast.error(err.data.message);
+        if (err?.message) {
+          toast.error(err.message);
         } else {
           toast.error("An error occurred while creating the admin.");
         }
@@ -107,22 +103,21 @@ export const Alladmins = () => {
   return (
     <>
       <div className="p-2 md:p-4">
-        <h1 className="text-3xl font-bold mb-5">Admin Management</h1>
+        <h1 className="text-3xl text-text-200 font-bold mb-5">Admin Management</h1>
         <div className="flex flex-col">
           <div className="flex justify-between items-center gap-2 md:gap-4 md:px-15 lg:px-20">
-            <div className="flex flex-grow bg-white px-4 py-3 border-[1.5px] border-slate-500 shadow-md rounded-md">
-              <input
-                type="text"
-                className="focus:outline-none w-full text-base"
-                placeholder="Enter Admin name"
-                onChange={(e) => handleChangeKey(e.target.value)}
-                value={searchKey}
-              />
-              <FaSearch size={20} className="cursor-pointer" />
-            </div>
+            <input
+              type="text"
+              className="shad-input flex-grow"
+              placeholder="Enter Admin name"
+              onChange={(e) => handleChangeKey(e.target.value)}
+              value={searchKey}
+            />
             <button
-              className={`text-sm md:text-base text-white font-bold hover:bg-[#4070F9] px-4 rounded py-2 xs:py-4 flex flex-center gap-2 ${
-                openForm ? "shadow-none bg-[#4070F9]" : "shadow-xl bg-[#5f8aff]"
+              className={`text-sm md:text-base text-white font-bold hover:bg-primary-100 px-4 rounded py-2 xs:py-4 flex flex-center gap-2 ${
+                openForm
+                  ? "shadow-none bg-primary-200"
+                  : "shadow-xl bg-primary-200"
               }`}
               onClick={() => setOpenForm((prev) => !prev)}
             >
@@ -143,7 +138,7 @@ export const Alladmins = () => {
                     type="text"
                     name="username"
                     id="username"
-                    className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+                    className="shad-input"
                     placeholder="Enter admin username..."
                     value={formData.username}
                     onChange={(e) => handleChange(e)}
@@ -152,7 +147,7 @@ export const Alladmins = () => {
                     type="email"
                     name="email"
                     id="email"
-                    className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+                    className="shad-input"
                     placeholder="Enter admin email..."
                     value={formData.email}
                     onChange={(e) => handleChange(e)}
@@ -161,11 +156,13 @@ export const Alladmins = () => {
                     type="password"
                     name="password"
                     id="password"
-                    className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+                    className="shad-input"
                     placeholder="Enter admin password..."
                     value={formData.password}
                     onChange={(e) => handleChange(e)}
                   />
+                  <p className="text-left text-red-400">{errMessage}</p>
+
                   <button
                     type="submit"
                     className="text-white bg-green-500 px-4 py-2 rounded"

@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import { MdDashboard } from "react-icons/md";
 
 export const AdminSidebar = () => {
-  const userInfo = useSelector((state) => state.admin.currentAdmin);
+  const adminInfo = useSelector((state) => state.auth);
   const [showSideBar, setSideBar] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ export const AdminSidebar = () => {
       dispatch(logout());
       dispatch(setCurrAdmin(null));
       toast.success(res.data.message); // Ensure this is correct
-      navigate("/admin/login");
+      navigate("/");
     } catch (error) {
       toast.error("Logout failed: " + error.message);
     }
@@ -36,14 +36,14 @@ export const AdminSidebar = () => {
       style={{ zIndex: 999, transition: "all 300ms ease-in" }}
       className={`${
         showSideBar ? "hidden" : "flex"
-      } lg:flex flex-col text-white md:w-[15vw] w-[40px] md:pl-6 pl-1 py-5 pr-1 xs:pr-0 bg-[#0F0F0F] h-screen fixed`}
+      } lg:flex flex-col text-white md:w-[15vw] w-[40px] md:pl-6 pl-1 py-5 pr-1 xs:pr-0 bg-bg-100 h-screen fixed`}
       id="navigation-container"
     >
       <NavLink
         to="/admin/dashboard"
         className={({ isActive }) =>
           `flex items-center gap-2 mb-8 ${
-            isActive ? "text-primary-600" : ""
+            isActive ? "text-primary-100" : ""
           } text-sm sm:text-lg`
         }
       >
@@ -59,7 +59,7 @@ export const AdminSidebar = () => {
           className={({ isActive }) =>
             `flex items-center gap-2  p-2 md:p-3 transition-all duration-300 ease-in-out transform  ${
               isActive &&
-              "xs:rounded-s-full xs:rounded-e-none bg-green-500 rounded-full"
+              "xs:rounded-s-full xs:rounded-e-none bg-primary-200 rounded-full"
             }`
           }
         >
@@ -71,7 +71,7 @@ export const AdminSidebar = () => {
           className={({ isActive }) =>
             `flex items-center gap-2 p-2 md:p-3 transition-all duration-300 ease-in-out transform  ${
               isActive &&
-              "xs:rounded-s-full xs:rounded-e-none bg-green-500 rounded-full"
+              "xs:rounded-s-full xs:rounded-e-none bg-primary-200 rounded-full"
             }`
           }
         >
@@ -83,7 +83,7 @@ export const AdminSidebar = () => {
           className={({ isActive }) =>
             `flex items-center gap-2 p-2 md:p-3 transition-all duration-300 ease-in-out transform  ${
               isActive &&
-              "xs:rounded-s-full xs:rounded-e-none bg-green-500 rounded-full"
+              "xs:rounded-s-full xs:rounded-e-none bg-primary-200 rounded-full"
             }`
           }
         >

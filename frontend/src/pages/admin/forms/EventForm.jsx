@@ -6,25 +6,20 @@ import {
 } from "../../../redux/api/eventApiSlice.js";
 import { useState, useEffect } from "react";
 import { z } from "zod";
-import { useDispatch, useSelector } from "react-redux";
-import { setEvents } from "../../../redux/features/event/eventSlice.js";
 import { toast } from "react-toastify";
 
 export const EventForm = () => {
   const { eventId } = useParams();
   const {
-    data: existedEvent,
+    data: event,
     isLoading,
     error,
-  } = useGetEventByIdQuery(eventId || "");
+  } = useGetEventByIdQuery(eventId || undefined);
   const [createEvent, { isLoading: isCreatingEvent }] =
     useCreateEventMutation();
   const [updateEvent, { isLoading: isUpdatingEvent }] =
     useUpdateEventByIdMutation();
 
-  const { events } = useSelector((state) => state.events);
-  const [eventsList, setEventsList] = useState(events);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -32,36 +27,40 @@ export const EventForm = () => {
     description: "",
     date: "",
     image: "",
-    noOfDays: "",
+    noOfDays: 0,
     location: "",
   });
 
   const [errMessage, setErrMessage] = useState("");
 
   useEffect(() => {
-    if (existedEvent) {
+    if (event) {
       setFormData({
-        title: existedEvent.title || "",
-        description: existedEvent.description || "",
-        date: existedEvent.date || "",
-        image: existedEvent.image || "",
-        noOfDays: existedEvent.noOfDays || "",
-        location: existedEvent.location || "",
+        title: event.title || "",
+        description: event.description || "",
+        date: event.date || "",
+        image: event.image || "",
+        noOfDays: event.noOfDays || 0,
+        location: event.location || "",
       });
     }
-  }, [existedEvent]);
+  }, [event]);
 
   const Schema = z.object({
     title: z.string().nonempty("Title is required"),
     description: z.string().nonempty("Description is required"),
     date: z.string().nonempty("Date is required"),
     image: z.string(),
-    noOfDays: z.string().nonempty("Number of days is required"),
+    noOfDays: z.number().int().min(0, "Number of days is required"),
     location: z.string().nonempty("Location is required"),
   });
 
-  const handleChange = (e) =>
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleChange = (e) => {
+    const value =
+      e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    const newValue = e.target.type === "number" ? parseInt(value) : value;
+    setFormData((prev) => ({ ...prev, [e.target.name]: newValue }));
+  };
 
   const [img, setImg] = useState("");
 
@@ -80,28 +79,50 @@ export const EventForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      Schema.parse(formData);
+      const parsedData = {
+        ...formData,
+        noOfDays: parseInt(formData.noOfDays) || 0,
+      };
+      Schema.parse(parsedData);
       if (eventId) {
-        const res = await updateEvent({ id: eventId, ...formData }).unwrap();
-        setEventsList((prev) =>
-          prev.map((item) => (item._id === res.Event._id ? res.Event : item))
-        );
-        dispatch(setEvents(eventsList));
-        toast.success(res.message);
-        navigate(`/admin/events/${res.Event._id}/categories`);
+        try {
+          const res = await updateEvent({ eventId, parsedData }).unwrap();
+          toast.success(res.message);
+          navigate(`/admin/events/${res.event._id}/`);
+        } catch (err) {
+          if (err instanceof z.ZodError) {
+            setErrMessage(err.errors[0].message);
+          } else {
+            toast.error(
+              err?.message || "An error occurred while creating the event."
+            );
+          }
+        }
       } else {
-        const res = await createEvent(formData).unwrap();
-        setEventsList((prev) => [res.Event, ...prev]);
-        dispatch(setEvents(eventsList));
-        toast.success(res.message);
-        navigate(`/admin/events/${res.Event._id}/categories`);
+        try {
+          const res = await createEvent(parsedData).unwrap();
+          toast.success(res.message);
+          navigate(`/admin/events/${res.event._id}/`);
+        } catch (err) {
+          if (err instanceof z.ZodError) {
+            console.log(err);
+            setErrMessage(err.errors[0].message);
+          } else {
+            console.log(err);
+            toast.error(
+              err?.data?.message ||
+                "An error occurred while creating the event."
+            );
+          }
+        }
       }
     } catch (err) {
       if (err instanceof z.ZodError) {
+        console.log(err.message);
         setErrMessage(err.errors[0].message);
       } else {
         toast.error(
-          err?.message || "An error occurred while creating the event."
+          err?.data?.message || "An error occurred while creating the category."
         );
       }
     }
@@ -140,6 +161,9 @@ export const EventForm = () => {
             value={formData.date}
             onChange={handleChange}
           />
+          {img && (
+            <img src={img} className="w-48 h-48 object-cover mx-auto my-2" />
+          )}
           <input
             type="file"
             accept="image/*"
@@ -147,7 +171,7 @@ export const EventForm = () => {
             className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
           />
           <input
-            type="text"
+            type="number"
             name="noOfDays"
             className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
             placeholder="Enter number of days..."

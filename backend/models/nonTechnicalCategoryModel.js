@@ -2,14 +2,10 @@ import mongoose from "mongoose";
 
 const nonTechnicalCategorySchema = mongoose.Schema(
   {
-    event: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Event",
-      required: true,
-    },
-    title: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
+    event: { type: String, required: true },
+    category: { type: String, required: true },
     noOfMembers: { type: Number, required: true },
-    participant: {
+    mainParticipant: {
       name: { type: String, required: true },
       branch: { type: String },
       rollNo: { type: String },
@@ -24,8 +20,6 @@ const nonTechnicalCategorySchema = mongoose.Schema(
         branch: { type: String },
       },
     ],
-    participantPhoneNumber: { type: String, required: true },
-    participantEmail: { type: String, required: true },
     audio: { type: String }, // URL from Cloudinary
     danceType: { type: String },
   },

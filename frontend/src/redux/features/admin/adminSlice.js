@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const adminSlice = createSlice({
   name: "admin",
   initialState: {
-    currentAdmin: JSON.parse(localStorage.getItem("adminInfo")),
+    currentAdmin: JSON.parse(localStorage.getItem("adminInfo")) || null,
     admins: [],
     loading: false,
     error: null,

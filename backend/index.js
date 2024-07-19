@@ -6,6 +6,8 @@ import { connectDB } from "./config/database.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
+import techRoutes from "./routes/technicalRoutes.js";
+import nonTechRoutes from "./routes/nonTechnicalRoutes.js";
 import { v2 as cloudinary } from "cloudinary";
 
 dotenv.config();
@@ -38,3 +40,5 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/event", eventRoutes);
 app.use("/api/category", categoryRoutes);
+app.use("/api/nonTechForm", nonTechRoutes);
+app.use("/api/techForm", techRoutes);

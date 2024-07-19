@@ -5,8 +5,8 @@ import { Navbar } from "./components/Navbar";
 const App = () => {
   return (
     <>
+      <Navbar />
       <main className="min-h-screen w-full">
-        <Navbar />
         <Outlet />
       </main>
     </>

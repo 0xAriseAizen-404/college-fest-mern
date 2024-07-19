@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useDispatch, useSelector } from "react-redux";
 import { useLogInAdminMutation } from "../../../redux/api/adminApiSlice";
 import { setCredentials } from "../../../redux/features/auth/authSlice";
-import { setCurrAdmin } from "../../../redux/features/admin/adminSlice";
 
 export const AdminLogin = () => {
   const dispatch = useDispatch();
@@ -31,21 +30,14 @@ export const AdminLogin = () => {
   const handleChange = (e) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
-  const { currentAdmin } = useSelector((state) => state.admin);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       SignInSchema.parse(formData);
-      const res = await logInAdmin(formData);
+      const res = await logInAdmin(formData).unwrap();
       setErrMessage("");
-      dispatch(setCredentials(res.data.Admin));
-      dispatch(setCurrAdmin(res.data.Admin));
-
-      // Log updated currentAdmin
-      console.log("Current Admin:", currentAdmin);
-
-      toast.success(res.data.message);
+      dispatch(setCredentials(res.admin));
+      toast.success(res.message);
       navigate("/admin/dashboard");
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -61,8 +53,8 @@ export const AdminLogin = () => {
   const redirect = sp.get("redirect") || "/admin/dashboard";
 
   useEffect(() => {
-    if (currentAdmin || adminInfo) navigate(redirect);
-  }, [currentAdmin, adminInfo, redirect, navigate]);
+    if (adminInfo) navigate(redirect);
+  }, [adminInfo, redirect, navigate]);
 
   return (
     <div className="mx-auto max-w-lg p-3 space-y-4 pt-10">

@@ -17,13 +17,25 @@ const categorySchema = new mongoose.Schema(
     },
     minimum: { type: Number, required: true, default: 1 },
     maximum: { type: Number, required: true, default: 10 },
-    prices: {
+    prizes: {
       price1: { type: Number, default: 0 },
       price2: { type: Number, default: 0 },
       price3: { type: Number, default: 0 },
     },
     isTechnical: { type: Boolean, required: true, default: false },
     duration: { type: Number, required: true, default: 1 },
+    techParticipants: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "TechnicalCategory",
+      },
+    ],
+    nonTechParticipants: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "NonTechnicalCategory",
+      },
+    ],
   },
   {
     timestamps: true,

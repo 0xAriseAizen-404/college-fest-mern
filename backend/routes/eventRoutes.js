@@ -3,6 +3,7 @@ import {
   createEvent,
   deleteEventById,
   getAllEvents,
+  getAllParticipants,
   getEventById,
   updateEventById,
 } from "../controllers/eventController.js";
@@ -10,8 +11,9 @@ import { authenticate } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.route("/create").post(authenticate, createEvent);
-router.route("/getAll").get(getAllEvents);
+router.post("/create", authenticate, createEvent);
+router.get("/getAll/participants", getAllParticipants);
+router.get("/getAll", getAllEvents);
 router
   .route("/:id")
   .get(getEventById)

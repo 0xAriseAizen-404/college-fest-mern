@@ -13,6 +13,9 @@ export const eventApiSlice = apiSlice.injectEndpoints({
     getAllEvents: builder.query({
       query: () => `${EVENT_URL}/getAll`,
     }),
+    getAllParticipants: builder.query({
+      query: () => `${EVENT_URL}/getAll/participants`,
+    }),
     getEventById: builder.query({
       query: (id) => `${EVENT_URL}/${id}`,
     }),
@@ -24,8 +27,8 @@ export const eventApiSlice = apiSlice.injectEndpoints({
     }),
     updateEventById: builder.mutation({
       query: (data) => ({
-        url: `${EVENT_URL}/${data.id}`,
-        body: data,
+        url: `${EVENT_URL}/${data.eventId}`,
+        body: data.parsedData,
         method: "PUT",
       }),
     }),
@@ -35,6 +38,7 @@ export const eventApiSlice = apiSlice.injectEndpoints({
 export const {
   useCreateEventMutation,
   useGetAllEventsQuery,
+  useGetAllParticipantsQuery,
   useGetEventByIdQuery,
   useDeleteEventByIdMutation,
   useUpdateEventByIdMutation,

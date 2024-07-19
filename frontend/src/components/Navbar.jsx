@@ -4,7 +4,7 @@ export const Navbar = () => {
   return (
     <div
       style={{ zIndex: 99 }}
-      className="fixed top-0 w-full px-8 bg-slate-500 flex justify-between"
+      className="sticky top-0 w-full px-8 bg-slate-500 flex justify-between"
     >
       <Link to="/" className="sm:w-[10rem] w-[8rem]">
         <img
