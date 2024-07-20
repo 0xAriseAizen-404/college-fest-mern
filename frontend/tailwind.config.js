@@ -2,6 +2,7 @@
 // const defaultTheme = import("tailwindcss/defaultTheme");
 
 export default {
+  outputDir: "public",
   darkMode: ["class"],
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
