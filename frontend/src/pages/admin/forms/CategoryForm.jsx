@@ -162,10 +162,10 @@ export const CategoryForm = () => {
   };
 
   return (
-    <div>
+    <div className="py-4 px-5 md:px-10 w-full flex flex-center bg-image-4 bg-cover min-h-screen">
       <form
         onSubmit={handleSubmit}
-        className="w-full flex flex-col items-center gap-2"
+        className="max-w-[800px] w-full flex flex-col items-center gap-2 border-1 bg-[#a988df] border-primary-200 p-5 rounded"
       >
         <h1 className="text-2xl font-bold">
           {categoryId
@@ -173,102 +173,111 @@ export const CategoryForm = () => {
             : `Create Category for ->  ${existingEvent?.title}`}
         </h1>
         {errMessage && <p className="text-red-500">{errMessage}</p>}
-        <div className="flex flex-col gap-2 w-5/6 sm:w-4/6 lg:w-3/6">
-          <input
-            type="text"
-            name="title"
-            className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
-            placeholder="Enter category title..."
-            value={formData.title}
-            onChange={handleChange}
-          />
-          <textarea
-            name="description"
-            className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
-            placeholder="Enter category description..."
-            value={formData.description}
-            onChange={handleChange}
-          />
-          <input
-            type="date"
-            name="date"
-            className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
-            value={formData.date}
-            onChange={handleChange}
-          />
-          {img && <img src={img} className="w-48 h-48 object-cover mx-auto my-2" />}
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImgChange}
-            className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
-          />
-          <input
-            type="number"
-            name="minimum"
-            className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
-            placeholder="Enter minimum participants..."
-            value={formData.minimum}
-            onChange={handleChange}
-          />
-          <input
-            type="number"
-            name="maximum"
-            className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
-            placeholder="Enter maximum participants..."
-            value={formData.maximum}
-            onChange={handleChange}
-          />
-          <input
-            type="number"
-            name="price1"
-            className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
-            placeholder="Enter first prize amount..."
-            value={formData.price1}
-            onChange={handleChange}
-          />
-          <input
-            type="number"
-            name="price2"
-            className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
-            placeholder="Enter second prize amount..."
-            value={formData.price2}
-            onChange={handleChange}
-          />
-          <input
-            type="number"
-            name="price3"
-            className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
-            placeholder="Enter third prize amount..."
-            value={formData.price3}
-            onChange={handleChange}
-          />
-          <label className="flex items-center">
+        <div className="flex flex-col md:flex-row gap-2 w-full">
+          <div className="flex flex-col gap-2 md:w-1/2">
             <input
-              type="checkbox"
-              name="isTechnical"
-              className="mr-2"
-              checked={formData.isTechnical}
-              onChange={handleCheckboxChange}
+              type="text"
+              name="title"
+              className="shad-input border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+              placeholder="Enter category title..."
+              value={formData.title}
+              onChange={handleChange}
             />
-            <span>Is technical?</span>
-          </label>
-          <input
-            type="number"
-            name="duration"
-            className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
-            placeholder="Enter category duration..."
-            value={formData.duration}
-            onChange={handleChange}
-          />
-          <button
-            type="submit"
-            className="bg-slate-600 text-white py-2 px-4 rounded hover:bg-slate-700 focus:outline-none"
-            disabled={isCreatingCategory || isUpdatingCategory}
-          >
-            {categoryId ? "Update Category" : "Create Category"}
-          </button>
+            <textarea
+              name="description"
+              className="shad-input border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+              placeholder="Enter category description..."
+              value={formData.description}
+              onChange={handleChange}
+            />
+            <input
+              type="date"
+              name="date"
+              className="shad-input border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+              value={formData.date}
+              onChange={handleChange}
+            />
+
+            <img
+              src={img || "https://via.placeholder.com/160x160"}
+              className="w-32 h-32 object-cover mx-auto my-2"
+            />
+
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImgChange}
+              className="shad-input border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+            />
+          </div>
+          <div className="flex flex-col gap-2 justify-between md:w-1/2">
+            <input
+              type="number"
+              name="minimum"
+              className="shad-input border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+              placeholder="Enter minimum participants..."
+              value={formData.minimum}
+              onChange={handleChange}
+            />
+            <input
+              type="number"
+              name="maximum"
+              className="shad-input border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+              placeholder="Enter maximum participants..."
+              value={formData.maximum}
+              onChange={handleChange}
+            />
+            <input
+              type="number"
+              name="price1"
+              className="shad-input border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+              placeholder="Enter first prize amount..."
+              value={formData.price1}
+              onChange={handleChange}
+            />
+            <input
+              type="number"
+              name="price2"
+              className="shad-input border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+              placeholder="Enter second prize amount..."
+              value={formData.price2}
+              onChange={handleChange}
+            />
+            <input
+              type="number"
+              name="price3"
+              className="shad-input border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+              placeholder="Enter third prize amount..."
+              value={formData.price3}
+              onChange={handleChange}
+            />
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                name="isTechnical"
+                className="mr-2"
+                checked={formData.isTechnical}
+                onChange={handleCheckboxChange}
+              />
+              <span>Is technical?</span>
+            </label>
+            <input
+              type="number"
+              name="duration"
+              className="shad-input border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+              placeholder="Enter category duration..."
+              value={formData.duration}
+              onChange={handleChange}
+            />
+          </div>
         </div>
+        <button
+          type="submit"
+          className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-800 focus:outline-none flex-grow w-full"
+          disabled={isCreatingCategory || isUpdatingCategory}
+        >
+          {categoryId ? "Update Category" : "Create Category"}
+        </button>
       </form>
     </div>
   );

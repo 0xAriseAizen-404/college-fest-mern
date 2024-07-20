@@ -103,7 +103,7 @@ export const Alladmins = () => {
   return (
     <>
       <div className="p-2 md:p-4">
-        <h1 className="text-3xl text-text-200 font-bold mb-5">Admin Management</h1>
+        <h1 className="text-3xl text-primary-100 font-bold mb-5">Admin Management</h1>
         <div className="flex flex-col">
           <div className="flex justify-between items-center gap-2 md:gap-4 md:px-15 lg:px-20">
             <input

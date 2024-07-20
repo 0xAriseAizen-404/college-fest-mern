@@ -14,8 +14,20 @@ export default {
     },
     extend: {
       backgroundImage: {
-        "hero-pattern": "url('/assets/hero.png')",
-        "footer-texture": "url('/img/footer-texture.png')",
+        "hero-pattern":
+          "url('/assets/energetic-dance-floor-with-people-celebrating-birthday.jpg')",
+        "image-1": "url('/assets/3d-music-related-scene.jpg')",
+        "image-2": "url('/assets/953.jpg')",
+        "image-3": "url('/assets/2259.jpg')",
+        "image-4": "url('/assets/2414.jpg')",
+        "image-5":
+          "url('/assets/Firefly images for college event_where students enjoying in the college event with lights scattering (1).jpg')",
+        "image-6":
+          "url('/assets/Firefly images for college event_where students enjoying in the college event with lights scattering (3).jpg')",
+        "image-7":
+          "url('/assets/Firefly images for college event_where students enjoying in the college event with lights scattering (6).jpg')",
+        "image-8": "url('/assets/119442-OPOVG5-632.jpg')",
+        "image-9": "url('/assets/5566.jpg')",
       },
       colors: {
         "primary-500": "#de283b",

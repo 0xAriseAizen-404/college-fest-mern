@@ -72,7 +72,7 @@ export const getAllParticipants = asyncHandler(async (req, res) => {
         ],
       });
 
-    const participants = events.map((event) => {
+    const participants = events.flatMap((event) => {
       const techParticipants = event.categories.reduce(
         (acc, category) => [...acc, ...category.techParticipants],
         []
@@ -82,17 +82,17 @@ export const getAllParticipants = asyncHandler(async (req, res) => {
         (acc, category) => [...acc, ...category.nonTechParticipants],
         []
       );
-      // console.log(...techParticipants, ...nonTechParticipants);
 
       return [...techParticipants, ...nonTechParticipants];
     });
 
-    res.status(200).json(...participants);
+    res.status(201).json(participants);
   } catch (error) {
     console.error("Error fetching events:", error.message);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
 
 // Get an event by ID
 export const getEventById = asyncHandler(async (req, res) => {

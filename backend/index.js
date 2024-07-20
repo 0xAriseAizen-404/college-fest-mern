@@ -9,6 +9,9 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import techRoutes from "./routes/technicalRoutes.js";
 import nonTechRoutes from "./routes/nonTechnicalRoutes.js";
 import { v2 as cloudinary } from "cloudinary";
+import path from "path";
+
+const __dirname = path.resolve();
 
 dotenv.config();
 connectDB();
@@ -23,11 +26,17 @@ const app = express();
 
 app.use(cors());
 app.use(cookieParser());
-app.use(express.json({ limit: "5mb" })); // to parse req.body
+app.use(express.json({ limit: "10mb" })); // to parse req.body
 // limit shouldn't be too high to prevent DOS
 app.use(express.urlencoded({ extended: true }));
 
 const PORT = process.env.PORT || 8000;
+
+app.use(express.static(path.join(__dirname, "frontend", "dist")));
+
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"))
+);
 
 app.listen(PORT, () => {
   console.log(`App is listening on port - ${PORT}`);

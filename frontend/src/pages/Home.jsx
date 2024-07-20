@@ -1,128 +1,130 @@
 import React, { useEffect } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "tailwindcss/tailwind.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { useGetAllQuery } from "../redux/api/categoryApiSlice";
+import { CategoryCard } from "../components/CategoryCard";
 
-gsap.registerPlugin(ScrollTrigger);
+// gsap.registerPlugin(ScrollTrigger);
 
 export const Home = () => {
-  useEffect(() => {
-    gsap.from(".hero-title", {
-      duration: 1,
-      y: -50,
-      opacity: 0,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".hero-section",
-        start: "top 80%",
-      },
-    });
+  const { data: categories } = useGetAllQuery();
 
-    gsap.from(".hero-subtitle", {
-      duration: 1,
-      y: -30,
-      opacity: 0,
-      ease: "power3.out",
-      delay: 0.3,
-      scrollTrigger: {
-        trigger: ".hero-section",
-        start: "top 80%",
-      },
-    });
+  // Uncomment and adjust the useEffect for GSAP animations if needed
+  // useEffect(() => {
+  //   gsap.from(".hero-title", {
+  //     duration: 1,
+  //     y: -50,
+  //     opacity: 0,
+  //     ease: "power3.out",
+  //     scrollTrigger: {
+  //       trigger: ".hero-section",
+  //       start: "top 80%",
+  //     },
+  //   });
 
-    gsap.from(".hero-buttons", {
-      duration: 1,
-      y: -20,
-      opacity: 0,
-      ease: "power3.out",
-      delay: 0.6,
-      scrollTrigger: {
-        trigger: ".hero-section",
-        start: "top 80%",
-      },
-    });
+  //   gsap.from(".hero-subtitle", {
+  //     duration: 1,
+  //     y: -30,
+  //     opacity: 0,
+  //     ease: "power3.out",
+  //     delay: 0.3,
+  //     scrollTrigger: {
+  //       trigger: ".hero-section",
+  //       start: "top 80%",
+  //     },
+  //   });
 
-    gsap.from(".event-card", {
-      duration: 1,
-      y: 30,
-      opacity: 0,
-      ease: "power3.out",
-      stagger: 0.3,
-      scrollTrigger: {
-        trigger: ".events-slider",
-        start: "top 80%",
-      },
-    });
-  }, []);
+  //   gsap.from(".hero-buttons", {
+  //     duration: 1,
+  //     y: -20,
+  //     opacity: 0,
+  //     ease: "power3.out",
+  //     delay: 0.6,
+  //     scrollTrigger: {
+  //       trigger: ".hero-section",
+  //       start: "top 80%",
+  //     },
+  //   });
+
+  //   gsap.from(".event-card", {
+  //     duration: 1,
+  //     y: 30,
+  //     opacity: 0,
+  //     ease: "power3.out",
+  //     stagger: 0.3,
+  //     scrollTrigger: {
+  //       trigger: ".events-slider",
+  //       start: "top 80%",
+  //     },
+  //   });
+  // }, []);
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: true,
+    autoplay: true,
+    autoplaySpeed: 2000,
+  };
 
   return (
-    <div className="bg-bg-100 text-text-100">
-      <header className="hero-section bg-bg-200 text-center py-20">
-        <div className="container mx-auto">
-          <h1 className="hero-title text-5xl mb-5 text-primary-200">
-            JOIN THE CELSIUS FEST🔥
-          </h1>
-          <p className="hero-subtitle text-xl mb-8">
-            Here is your chance to be a part of CIEM's most awaited annual
-            festival where you can participate, enjoy, and win prizes. We are
-            looking forward to seeing you at this grand event.
-          </p>
-          <div className="hero-buttons">
-            <a
-              href="#"
-              className="btn btn-primary bg-primary-100 text-text-100 px-4 py-2 rounded mx-2"
-            >
-              Register to events
-            </a>
-            <a
-              href="#"
-              className="btn btn-secondary bg-accent-200 text-text-100 px-4 py-2 rounded mx-2"
-            >
-              Know more
-            </a>
-          </div>
-        </div>
-      </header>
-
-      <section className="events-section py-20">
-        <div className="container mx-auto">
-          <h2 className="section-title text-center text-4xl mb-10">
-            Celsius Events
-          </h2>
-          <div className="events-slider flex space-x-6 overflow-x-auto px-6">
-            <div className="event-card bg-bg-300 p-6 rounded-lg min-w-[300px] text-center">
-              <h3 className="text-2xl mb-3">Technical</h3>
-              <p>Gripper, Nitrocharge, Line of Control</p>
+    <>
+      <div className="h-[100vh] bg-hero-pattern bg-cover flex flex-center flex-col gap-4">
+        <h1 className="text-6xl font-bold text-primary-100">College Fest</h1>
+        <h1 className="text-white font-semibold w-3/6 h-auto text-2xl">
+          Here is your chance to be a part of RVRJCCE's most awaited annual
+          festival where you can participate, enjoy, and win prizes. We are
+          looking forward to seeing you at this grand event.
+        </h1>
+      </div>
+      <div className="max-h-[80vh] flex flex-col gap-4 py-4 pb-10 flex-center bg-dark-4">
+        <h1 className="text-3xl text-primary-200">Event Categories</h1>
+        <Slider {...settings} className="h-[60vh] w-[60vw]">
+          {categories?.slice(0, 5)?.map((item, index) => (
+            <div className="w-1/2 h-[60vh]" key={item._id}>
+              <CategoryCard category={item} />
             </div>
-            <div className="event-card bg-bg-300 p-6 rounded-lg min-w-[300px] text-center">
-              <h3 className="text-2xl mb-3">Cultural</h3>
-              <p>Dance, Singing, Band performance</p>
-            </div>
-            {/* More cards as needed */}
+          ))}
+        </Slider>
+      </div>
+      <div className="flex flex-col md:flex-row gap-4 px-5">
+        <div className="flex flex-col md:w-1/2 gap-4 py-3">
+          <h1 className="text-2xl text-primary-500">About RVRJCCE</h1>
+          <div className="text-sm justify-center">
+            Established by the renowned Nagarjuna Education Society (1967) in
+            the year 1985, the College drew its initial impetus from people's
+            representatives, local doctors, charitable trusts and commercial
+            houses of Guntur District. Today, it enjoys flagship status among
+            the eight constituent institutions that are governed by Nagarjuna
+            Education Society. The founder-members of Nagarjuna Education
+            Society and their successors have provided abundant inputs to turn a
+            mere 3 programmes -180-intake College into a 19 programmes - 1596 -
+            intake by the academic year 2023-2024. The premier status of the
+            institution is made possible by sticking to our core-principles of
+            student-focus, Human Resource Development and emphasis on total
+            quality.
           </div>
         </div>
-      </section>
-
-      <section className="about-section py-20 bg-bg-200">
-        <div className="container mx-auto text-center">
-          <h2 className="section-title text-4xl mb-6">About CIEM</h2>
-          <p className="max-w-2xl mx-auto">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-            nisl eros, pulvinar facilisis justo mollis, auctor consequat urna.
-          </p>
+        <div className="flex flex-col md:w-1/2 gap-4 py-3">
+          <h1 className="text-2xl text-primary-500">Contact US</h1>
+          <pre className="flex flex-col">
+            <span>College</span>
+            <span>The Principal R.V.R. & J.C.College of Engineering</span>
+            <span>Chandramoulipuram, Chowdavaram,</span>
+            <span>GUNTUR-522 019 Andhra Pradesh :: India</span>
+            <span>Ph: 94910 73317 & 94910 73318 (O)</span>
+            <span>College E-mail: rvrjcce@hotmail.com</span>
+            <span> Website: rvrjcce.ac.in</span>
+          </pre>
         </div>
-      </section>
-
-      <footer className="footer-section py-10 bg-bg-200 text-text-200 text-center">
-        <div className="container mx-auto">
-          <div className="contact-info mb-6">
-            <h3 className="text-2xl mb-4">Contact</h3>
-            <p>Amartya Dhar - +91 72788 07767</p>
-            <p>Biswajit - +91 86373 36559</p>
-            <p>Sougata Das - +91 80164 48905</p>
-          </div>
-        </div>
-      </footer>
-    </div>
+      </div>
+    </>
   );
 };

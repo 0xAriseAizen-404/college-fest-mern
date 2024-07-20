@@ -40,7 +40,7 @@ export const EventForm = () => {
         description: event.description || "",
         date: event.date || "",
         image: event.image || "",
-        noOfDays: event.noOfDays || 0,
+        noOfDays: event.noOfDays || 1,
         location: event.location || "",
       });
     }
@@ -129,27 +129,27 @@ export const EventForm = () => {
   };
 
   return (
-    <div>
+    <div className="bg-image-3 bg-cover min-h-screen px-4 flex flex-col flex-center py-10 ">
       <form
         onSubmit={handleSubmit}
-        className="w-full flex flex-col items-center gap-2"
+        className="max-w-[600px] w-full px-10 py-5 flex flex-col flex-center gap-2 border-2 rounded border-primary-200 bg-primary-200"
       >
         <h1 className="text-2xl font-bold">
           {eventId ? "Edit Event" : "Create Event"}
         </h1>
         {errMessage && <p className="text-red-500">{errMessage}</p>}
-        <div className="flex flex-col gap-2 w-5/6 sm:w-4/6 lg:w-3/6">
+        <div className="flex flex-col gap-2 w-full">
           <input
             type="text"
             name="title"
-            className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+            className="shad-input border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
             placeholder="Enter event title..."
             value={formData.title}
             onChange={handleChange}
           />
           <textarea
             name="description"
-            className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+            className="shad-input border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
             placeholder="Enter event description..."
             value={formData.description}
             onChange={handleChange}
@@ -157,7 +157,7 @@ export const EventForm = () => {
           <input
             type="date"
             name="date"
-            className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+            className="shad-input border-[1.5px] text-white border-slate-500 rounded px-4 py-2 focus:outline-none"
             value={formData.date}
             onChange={handleChange}
           />
@@ -168,12 +168,12 @@ export const EventForm = () => {
             type="file"
             accept="image/*"
             onChange={handleImgChange}
-            className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+            className="shad-input border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
           />
           <input
             type="number"
             name="noOfDays"
-            className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+            className="shad-input border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
             placeholder="Enter number of days..."
             value={formData.noOfDays}
             onChange={handleChange}
@@ -181,7 +181,7 @@ export const EventForm = () => {
           <input
             type="text"
             name="location"
-            className="border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
+            className="shad-input border-[1.5px] border-slate-500 rounded px-4 py-2 focus:outline-none"
             placeholder="Enter event location..."
             value={formData.location}
             onChange={handleChange}

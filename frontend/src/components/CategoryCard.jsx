@@ -4,6 +4,7 @@ import { FaTrophy } from "react-icons/fa";
 import { MdOutlineTimer } from "react-icons/md";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const CategoryCard = ({ category, handleDelete, adminInfo }) => {
   const participantsCount = () => {
@@ -20,17 +21,19 @@ export const CategoryCard = ({ category, handleDelete, adminInfo }) => {
   // const canShow = new Date(category.date)  startOfToday;
   // console.log(canShow);
 
+  const adminInfoo = location.pathname.split("/").length == 2;
+
   return (
-    <div className="flex flex-row bg-light-1 shadow-xl gap-2">
+    <div className="flex flex-row items-center bg-light-1 shadow-xl gap-2">
       <img
         src={category?.image}
         alt={category?.title}
-        className="w-3/6 object-cover"
+        className="w-3/6 h-[60vh] object-cover"
       />
       <div className="flex flex-col gap-2 w-2/3 p-4">
         <h1 className="text-2xl font-bold">{category?.title}</h1>
         <p className="text-sm text-slate-800">
-          {category?.description.substring(0, 150)}...
+          {category?.description.substring(0, 100)}...
         </p>
         <div className="flex flex-row flex-wrap items-center gap-2">
           <div className="text-md flex w-full items-center gap-2">
@@ -88,9 +91,15 @@ export const CategoryCard = ({ category, handleDelete, adminInfo }) => {
           {!adminInfo && (
             <Link
               to={`${
-                category.isTechnical
-                  ? `${category?._id}/techForm`
-                  : `${category?._id}/nonTechForm`
+                !adminInfoo
+                  ? category.isTechnical
+                    ? `${category?._id}/techForm`
+                    : `${category?._id}/nonTechForm`
+                  : `/events/${category.event}/${
+                      category.isTechnical
+                        ? `${category?._id}/techForm`
+                        : `${category?._id}/nonTechForm`
+                    }`
               }`}
               className="p-2 bg-green-600 hover:bg-green-800 text-white text-sm rounded"
             >

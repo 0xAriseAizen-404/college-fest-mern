@@ -6,7 +6,7 @@ const App = () => {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen w-full">
+      <main className="min-h-screen w-full sticky top-0">
         <Outlet />
       </main>
     </>

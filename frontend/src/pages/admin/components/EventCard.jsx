@@ -1,3 +1,4 @@
+
 import { format } from "date-fns";
 import { FaLocationDot } from "react-icons/fa6";
 import { Link } from "react-router-dom";
@@ -25,7 +26,7 @@ export const EventCard = ({ event, setEvents, adminInfo, cantShow }) => {
   };
   return (
     <Link to={`${event._id}`}>
-      <div className="card bg-white-100 w-full shadow-2xl rounded-xl bg-light-2">
+      <div className="bg-primary-200 text-white card bg-white-100 w-full shadow-2xl">
         <figure>
           <img
             src={event.image}
@@ -38,13 +39,13 @@ export const EventCard = ({ event, setEvents, adminInfo, cantShow }) => {
             <span className="text-xl font-semibold truncate w-4/6">
               {event.title}
             </span>
-            <span className="text-slate-600">
+            <span className="text-white">
               {format(event.date, "dd-MM-yyy")}
             </span>
           </div>
-          <p className="text-slate-700 truncate">{event?.description}</p>
+          <p className="text-white truncate">{event?.description}</p>
           <div className="flex justify-between items-center">
-            <div className="flex gap-2 items-center text-slate-600 text-sm">
+            <div className="flex gap-2 items-center text-swhite text-sm">
               <FaLocationDot size={16} />
               <span>{event.location}</span>
             </div>

@@ -3,11 +3,12 @@ import { AdminSidebar } from "../../components/AdminSidebar";
 
 export const AdminLayout = () => {
   const location = useLocation();
+  const adminPath = location.pathname.split("/").pop() !== "login";
 
   return (
     <main className="min-h-screen w-full bg-light-4">
-      {location.pathname.split("/").pop() !== "login" && <AdminSidebar />}
-      <div className="md:pl-[15vw] pl-[40px]">
+      {adminPath && <AdminSidebar />}
+      <div className={` ${adminPath !== "login" && "md:pl-[15vw] pl-[40px]"}`}>
         <Outlet />
       </div>
     </main>

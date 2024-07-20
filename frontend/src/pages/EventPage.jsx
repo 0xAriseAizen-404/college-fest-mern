@@ -178,12 +178,12 @@ export const EventPage = () => {
       <div className="mt-5 md:w-full sm:w-5/6 w-7/8 grid grid-cols-1 md:gap-8 sm:gap-6 gap-4 md:px-15 lg:px-20 xs:text-base text-sm">
         {tabCount === 1 &&
           (technicalCategories.length === 0 ? (
-            <div className="w-full flex items-center self-center">
-              <img
+            <div className="w-full flex flex-center self-center">
+              {/* <img
                 src={"./assets/download.jpg"}
                 alt="No Technical Category"
                 className="w-1/2 mix-blend-darken mx-auto"
-              />
+              /> */}
               <h1 className="flex flex-col">
                 <span className="text-3xl font-bold text-red-500">No</span>
                 <span className="text-2xl font-semibold">Events</span>
@@ -201,12 +201,12 @@ export const EventPage = () => {
           ))}
         {tabCount === 2 &&
           (nonTechnicalCategories.length === 0 ? (
-            <div className="w-full flex items-center self-center">
-              <img
+            <div className="w-full flex flex-center self-center">
+              {/* <img
                 src={"./assets/download.jpg"}
                 alt="No Non-Technical Category"
                 className="w-1/2 mix-blend-darken mx-auto"
-              />
+              /> */}
               <h1 className="flex flex-col">
                 <span className="text-3xl font-bold text-red-500">No</span>
                 <span className="text-2xl font-semibold">Events</span>

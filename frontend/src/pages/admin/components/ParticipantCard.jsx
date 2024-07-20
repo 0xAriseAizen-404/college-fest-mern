@@ -14,8 +14,8 @@ const ParticipantCard = ({ participant, index }) => {
           Category : {participant?.category}
         </h1>
       </div>
-      <div className="grid md:grid-cols-2 md:grid-rows-1 grid-rows-2 gap-4 mt-4">
-        <div className="flex flex-col gap-1">
+      <div className="flex flex-col md:flex-row gap-4 mt-4">
+        <div className="flex flex-col gap-1 md:w-1/2 flex-shrink-0">
           <h1 className="text-xl font-semibold">Main Participant : </h1>
           <h1 className="text-sm">Name: {mainParticipant?.name}</h1>
           <h1 className="text-sm">RollNo: {mainParticipant?.rollNo}</h1>
@@ -23,7 +23,7 @@ const ParticipantCard = ({ participant, index }) => {
           <h1 className="text-sm">Email: {mainParticipant?.email}</h1>
           <h1 className="text-sm">Phone: {mainParticipant?.phoneNumber}</h1>
         </div>
-        <div className="flex flex-col flex-wrap">
+        <div className="flex flex-col flex-wrap md:w-1/2">
           <h1 className="text-base font-semibold">CoParticipants</h1>
           {participant?.coParticipants.map((participant, index) => {
             return (
