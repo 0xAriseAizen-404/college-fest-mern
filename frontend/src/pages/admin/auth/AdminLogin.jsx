@@ -57,9 +57,9 @@ export const AdminLogin = () => {
   }, [adminInfo, redirect, navigate]);
 
   return (
-    <div className="mx-auto max-w-lg p-3 space-y-4 pt-10 -pl-[40px]">
+    <div className="mx-auto max-w-lg p-3 space-y-4 pt-10">
       <h1 className="text-center h2-bold">Admin</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 ml-[-40px]">
         <input
           type="text"
           name="email"

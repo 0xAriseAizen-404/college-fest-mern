@@ -20,7 +20,7 @@ export const ViewParticipants = () => {
     <div className="p-4">
       <span className="text-xl font-bold">All the participants in -&gt; </span>
       <span className="text-2xl font-bold">{category?.title} Category</span>
-      <div className="grid md:grid-cols-2 grid-cols-1 ">
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-4 ">
         {/* {console.log(Array.from(participants))} */}
         {participants.map((participant, index) => (
           <ParticipantCard

@@ -130,7 +130,7 @@ export const TechForm = () => {
       formSchema.parse(formData);
       const res = await createTechnicalCategory(formData).unwrap();
       toast.success(res.message);
-      navigate(`events/${eventId}`);
+      navigate(`/events/${eventId}`);
     } catch (err) {
       if (err instanceof z.ZodError) {
         setErrMessage(err.errors[0].message);

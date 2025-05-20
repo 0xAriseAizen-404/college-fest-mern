@@ -11,7 +11,7 @@ export const Participants = () => {
     isLoading,
     isError,
   } = useGetAllParticipantsQuery();
-  // console.log(participants);
+  console.log(participants);
 
   const [filteredParticipants, setFilteredParticipants] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,25 +20,27 @@ export const Participants = () => {
 
   useEffect(() => {
     if (participants.length > 0) {
-      let filteredList = participants;
+      let filteredList = [...participants]; // Create a copy of participants array
 
       if (searchTerm) {
-        filteredList = participants.filter(
-          (participant) =>
+        filteredList = filteredList.filter((participant) => {
+          const lowercasedTerm = searchTerm.toLowerCase();
+          return (
             participant.mainParticipant?.name
               ?.toLowerCase()
-              .includes(searchTerm) ||
+              .includes(lowercasedTerm) ||
             participant.mainParticipant?.branch
               ?.toLowerCase()
-              .includes(searchTerm) ||
+              .includes(lowercasedTerm) ||
             participant.mainParticipant?.rollNo
               ?.toLowerCase()
-              .includes(searchTerm)
-        );
+              .includes(lowercasedTerm)
+          );
+        });
       }
 
       if (sortBy) {
-        filteredList = filteredList.sort((a, b) => {
+        filteredList.sort((a, b) => {
           if (sortBy === "name") {
             return sortOrder === "asc"
               ? a.mainParticipant.name.localeCompare(b.mainParticipant.name)
@@ -95,9 +97,25 @@ export const Participants = () => {
           placeholder="Search by name"
         />
       </div>
-      <div className="grid md:grid-cols-2 grid-cols-1 ">
-        {/* {console.log(Array.from(participants))} */}
-        {participants.map((participant, index) => (
+      <div className="w-4/6 flex justify-between">
+        <div>
+          <label>Sort by: </label>
+          <select value={sortBy} onChange={handleSort}>
+            <option value="name">Name</option>
+            <option value="branch">Branch</option>
+            <option value="rollNo">Roll No</option>
+          </select>
+        </div>
+        <div>
+          <label>Order: </label>
+          <select value={sortOrder} onChange={handleSortOrder}>
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </div>
+      </div>
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-4 ">
+        {filteredParticipants.map((participant, index) => (
           <ParticipantCard
             key={participant._id}
             participant={participant}

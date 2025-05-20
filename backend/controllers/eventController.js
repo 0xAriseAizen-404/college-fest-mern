@@ -85,7 +85,7 @@ export const getAllParticipants = asyncHandler(async (req, res) => {
 
       return [...techParticipants, ...nonTechParticipants];
     });
-
+    console.log(participants);
     res.status(201).json(participants);
   } catch (error) {
     console.error("Error fetching events:", error.message);

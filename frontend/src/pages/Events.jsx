@@ -56,7 +56,6 @@ export const Events = () => {
     }
   }, [eventsData, dispatch]);
 
-
   const handleSetEvents = (updateFn) => {
     setEventsList((prevEvents) => {
       const updatedEvents = updateFn(prevEvents);
